@@ -8,7 +8,7 @@
 ## Installation
 
 ```bash
-bash <(wget --no-check-certificate -O - 'https://raw.githubusercontent.com/Chiko1337/SinusBot-Installer-for-Ubuntu-22.04-Debian-11-YT-DLP-/main/sinusbot_installer.sh')
+bash <(wget --no-check-certificate -O - 'https://raw.githubusercontent.com/Chiko1337/SinusBot-Installer-Linux-Fixed/main/sinusbot_installer.sh')
 ```
 
 This command basically downloads the latest version of the installer-script and executes it via the bash.
