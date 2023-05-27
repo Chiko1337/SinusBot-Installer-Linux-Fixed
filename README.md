@@ -3,7 +3,7 @@
 ## Officially supported Linux distributions
 
 - Debian 11+
-- Ubuntu 22.04+
+- Ubuntu 20.04+
 
 ## Installation
 
