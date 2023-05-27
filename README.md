@@ -1,7 +1,5 @@
 # SinusBot Installer for Linux
 
-![Build Status](https://github.com/sinusbot/installer-linux/workflows/CI/badge.svg)
-
 ## Officially supported Linux distributions
 
 - Debian 11+
