@@ -5,6 +5,14 @@
 - Debian 11+
 - Ubuntu 22.04+
 
+## Installation
+
+```bash
+bash <(wget --no-check-certificate -O - 'https://raw.githubusercontent.com/SinusBot/installer-linux/master/sinusbot_installer.sh')
+```
+
+This command basically downloads the latest version of the installer-script and executes it via the bash.
+
 ## Features
 
 - Install the SinusBot to a selected folder
@@ -31,18 +39,6 @@ The following tasks will be done:
 - Starts the SinusBot after installation
 
 The duration of the installation process depends on your system (how many packages need to be updated, internet connection, processing power) but typically takes about one to five minutes.
-
-> There's *no support* for *Plesk* or outdated operating systems like *Debian 7*!
-
-[![Watch video](https://img.youtube.com/vi/_GEd_ert7PA/0.jpg)](https://www.youtube.com/watch?v=_GEd_ert7PA)
-
-## Installation
-
-```bash
-bash <(wget --no-check-certificate -O - 'https://raw.githubusercontent.com/SinusBot/installer-linux/master/sinusbot_installer.sh')
-```
-
-This command basically downloads the latest version of the installer-script and executes it via the bash.
 
 ## Contribution
 
