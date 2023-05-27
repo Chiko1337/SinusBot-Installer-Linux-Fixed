@@ -1,5 +1,5 @@
 #!/bin/bash
-# SinusBot installer by Philipp Eßwein - DAThosting.eu philipp.esswein@dathosting.eu
+# SinusBot installer by Philipp E遷ein - DAThosting.eu philipp.esswein@dathosting.eu
 
 # Vars
 
@@ -104,7 +104,7 @@ greenMessage "This is the automatic installer for latest SinusBot. USE AT YOUR O
 sleep 1
 cyanMessage "You can choose between installing, upgrading and removing the SinusBot."
 sleep 1
-redMessage "Installer by Philipp Esswein | DAThosting.eu - Your game-/voiceserver hoster (only german)."
+redMessage "Installer by Philipp Esswein | For Ubuntu 22.04 and Debian 11 by Chiko#1337"
 sleep 1
 magentaMessage "Please rate this script at: https://forum.sinusbot.com/resources/sinusbot-installer-script.58/"
 sleep 1
@@ -432,7 +432,7 @@ if [ "$INSTALL" == "Rem" ]; then
 
   SINUSBOTUSER=$(ls -ld $LOCATION | awk '{print $3}')
 
-  if [[ -f /usr/local/bin/youtube-dl ]]; then
+  if [[ -f /usr/local/bin/yt-dlp ]]; then
     redMessage "Remove YoutubeDL?"
 
     OPTIONS=("Yes" "No")
@@ -444,8 +444,8 @@ if [ "$INSTALL" == "Rem" ]; then
     done
 
     if [ "$OPTION" == "Yes" ]; then
-      if [[ -f /usr/local/bin/youtube-dl ]]; then
-        rm /usr/local/bin/youtube-dl
+      if [[ -f /usr/local/bin/yt-dlp ]]; then
+        rm /usr/local/bin/yt-dlp
       fi
 
       if [[ -f /etc/cron.d/ytdl ]]; then
@@ -630,7 +630,7 @@ else
   else
     apt-get -y install ntp
   fi
-  apt-get install -y -qq --no-install-recommends libfontconfig libxtst6 screen xvfb libxcursor1 ca-certificates bzip2 psmisc libglib2.0-0 less python iproute2 dbus libnss3 libegl1-mesa x11-xkb-utils libasound2 libxcomposite-dev libxi6 libpci3 libxslt1.1 libxkbcommon0 libxss1
+  apt-get install -y -qq --no-install-recommends libfontconfig1 libxtst6 screen xvfb libxcursor1 ca-certificates bzip2 psmisc libglib2.0-0 less python-is-python3 iproute2 dbus libnss3 libegl1-mesa x11-xkb-utils libasound2 libxcomposite-dev libxi6 libpci3 libxslt1.1 libxkbcommon0 libxss1 libxdamage1
   update-ca-certificates >/dev/null
 fi
 
@@ -651,45 +651,6 @@ fi
 greenMessage "Packages installed"!
 
 # Setting server time
-
-if [[ $VIRTUALIZATION_TYPE == "openvz" ]]; then
-  redMessage "You're using OpenVZ virtualization. You can't set your time, maybe it works but there is no guarantee. Skipping this part..."
-else
-  if [[ -f /etc/centos-release ]] || [ $(cat /etc/*release | grep "DISTRIB_ID=" | sed 's/DISTRIB_ID=//g') ]; then
-    if [ "$OSRELEASE" == "18.04" ] && [ "$OS" == "ubuntu" ]; then
-      systemctl start chronyd
-      if [[ $(chronyc -a 'burst 4/4') == "200 OK" ]]; then
-        TIME=$(date)
-      else
-        errorExit "Error while setting time via chrony"!
-      fi
-    else
-      if [[ -f /etc/centos-release ]]; then
-       service ntpd stop
-      else
-       service ntp stop
-      fi
-      ntpd -s 0.pool.ntp.org
-      if [[ -f /etc/centos-release ]]; then
-       service ntpd start
-      else
-       service ntp start
-      fi
-      TIME=$(date)
-    fi
-    greenMessage "Automatically set time to" $TIME!
-  else
-    if [[ $(command -v timedatectl) != "" ]]; then
-      service ntp restart
-      timedatectl set-ntp yes
-      timedatectl
-      TIME=$(date)
-      greenMessage "Automatically set time to" $TIME!
-    else
-      redMessage "Unable to configure your date automatically, the installation will still be attempted."
-    fi
-  fi
-fi
 
 USERADD=$(which useradd)
 GROUPADD=$(which groupadd)
@@ -798,16 +759,16 @@ cd $LOCATION
 
 greenMessage "Downloading latest SinusBot."
 
-su -c "wget -q https://www.sinusbot.com/dl/sinusbot.current.tar.bz2" $SINUSBOTUSER
-if [[ ! -f sinusbot.current.tar.bz2 && ! -f sinusbot ]]; then
+su -c "wget -q https://www.sinusbot.com/pre/sinusbot-1.0.2-amd64.tar.bz2" $SINUSBOTUSER
+if [[ ! -f sinusbot-1.0.2-amd64.tar.bz2 && ! -f sinusbot ]]; then
   errorExit "Download failed! Exiting now"!
 fi
 
 # Installing latest SinusBot.
 
 greenMessage "Extracting SinusBot files."
-su -c "tar -xjf sinusbot.current.tar.bz2" $SINUSBOTUSER
-rm -f sinusbot.current.tar.bz2
+su -c "tar -xjf sinusbot-1.0.2-amd64.tar.bz2" $SINUSBOTUSER
+rm -f sinusbot-1.0.2-amd64.tar.bz2
 
 if [ "$DISCORD" == "false" ]; then
 
@@ -922,7 +883,7 @@ fi
 
 if [ "$YT" == "Yes" ]; then
   greenMessage "Installing YT-Downloader now"!
-  if [ "$(cat /etc/cron.d/ytdl)" == "0 0 * * * $SINUSBOTUSER youtube-dl -U --restrict-filename >/dev/null" ]; then
+  if [ "$(cat /etc/cron.d/ytdl)" == "0 0 * * * $SINUSBOTUSER yt-dlp -U --restrict-filename >/dev/null" ]; then
         rm /etc/cron.d/ytdl
         yellowMessage "Deleted old YT-DL cronjob. Generating new one in a second."
   fi
@@ -930,28 +891,28 @@ if [ "$YT" == "Yes" ]; then
     redMessage "Cronjob already set for YT-DL updater"!
   else
     greenMessage "Installing Cronjob for automatic YT-DL update..."
-    echo "0 0 * * * $SINUSBOTUSER PATH=$PATH:/usr/local/bin; youtube-dl -U --restrict-filename >/dev/null" >>/etc/cron.d/ytdl
+    echo "0 0 * * * $SINUSBOTUSER PATH=$PATH:/usr/local/bin; yt-dlp -U --restrict-filename >/dev/null" >>/etc/cron.d/ytdl
     greenMessage "Installing Cronjob successful."
   fi
 
-  sed -i 's/YoutubeDLPath = \"\"/YoutubeDLPath = \"\/usr\/local\/bin\/youtube-dl\"/g' $LOCATION/config.ini
+  sed -i 's/YoutubeDLPath = \"\"/YoutubeDLPath = \"\/usr\/local\/bin\/yt-dlp\"/g' $LOCATION/config.ini
 
-  if [[ -f /usr/local/bin/youtube-dl ]]; then
-    rm /usr/local/bin/youtube-dl
+  if [[ -f /usr/local/bin/yt-dlp ]]; then
+    rm /usr/local/bin/yt-dlp
   fi
 
   greenMessage "Downloading YT-DL now..."
-  wget -q -O /usr/local/bin/youtube-dl http://yt-dl.org/downloads/latest/youtube-dl
+  wget -q -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/download/2023.03.04/yt-dlp
 
-  if [ ! -f /usr/local/bin/youtube-dl ]; then
+  if [ ! -f /usr/local/bin/yt-dlp ]; then
     errorExit "Download failed! Exiting now"!
   else
     greenMessage "Download successful"!
   fi
 
-  chmod a+rx /usr/local/bin/youtube-dl
+  chmod a+rx /usr/local/bin/yt-dlp
 
-  youtube-dl -U --restrict-filename
+  yt-dlp -U --restrict-filename
 
 fi
 
