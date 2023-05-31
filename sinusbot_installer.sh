@@ -104,7 +104,7 @@ greenMessage "This is the automatic installer for latest SinusBot. USE AT YOUR O
 sleep 1
 cyanMessage "You can choose between installing, upgrading and removing the SinusBot."
 sleep 1
-redMessage "Installer by Philipp Esswein | For Ubuntu 22.04 and Debian 11 by Chiko#1337"
+redMessage "Installer by Philipp Esswein | For Ubuntu 20.04+ and Debian 11 by Chiko#1337"
 sleep 1
 magentaMessage "Please rate this script at: https://forum.sinusbot.com/resources/sinusbot-installer-script.58/"
 sleep 1
