@@ -18,7 +18,7 @@ This command basically downloads the latest version of the installer-script and 
 - Install the SinusBot to a selected folder
   - Automatic = /opt/sinusbot
   - or own dir
-- Update the SinusBot and youtube-dl
+- Update the SinusBot and youtube-dlp
 - Reset the password
 - Uninstall the bot
 
@@ -29,8 +29,8 @@ The following tasks will be done:
 - Installs all the necessary dependencies
 - Creates a separated user
 - Installs the latest SinusBot version
-- Installs youtube-dl
-- Adds a cronjob for daily youtube-dl update
+- Installs [youtube-dlp](https://github.com/yt-dlp/yt-dlp) 
+- Adds a cronjob for daily youtube-dlp update
 - Sets all the file permissions correctly
 - Generates startup files:
   - systemd file => `service sinusbot {start|stop|restart|status}`
