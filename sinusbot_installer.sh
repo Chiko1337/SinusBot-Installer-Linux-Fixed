@@ -902,7 +902,7 @@ if [ "$YT" == "Yes" ]; then
   fi
 
   greenMessage "Downloading YT-DL now..."
-  wget -q -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/download/2023.03.04/yt-dlp
+  wget -q -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
 
   if [ ! -f /usr/local/bin/yt-dlp ]; then
     errorExit "Download failed! Exiting now"!
