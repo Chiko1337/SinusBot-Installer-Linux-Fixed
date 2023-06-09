@@ -448,11 +448,11 @@ if [ "$INSTALL" == "Rem" ]; then
         rm /usr/local/bin/yt-dlp
       fi
 
-      if [[ -f /etc/cron.d/ytdl ]]; then
-        rm /etc/cron.d/ytdl
+      if [[ -f /etc/cron.d/ytdlp ]]; then
+        rm /etc/cron.d/ytdlp
       fi
 
-      greenMessage "Removed YT-DL successfully"!
+      greenMessage "Removed YT-DLP successfully"!
     fi
   fi
 
@@ -551,9 +551,9 @@ select OPTION in "${OPTIONS[@]}"; do
   esac
 done
 
-# Ask for YT-DL
+# Ask for YT-DLP
 
-redMessage "Should YT-DL be installed/updated?"
+redMessage "Should YT-DLP be installed/updated?"
 OPTIONS=("Yes" "No")
 select OPTION in "${OPTIONS[@]}"; do
   case "$REPLY" in
@@ -879,19 +879,19 @@ fi
 #  greenMessage "Installing SinusBot update cronjob successful."
 #fi
 
-# Installing YT-DL.
+# Installing YT-DLP.
 
 if [ "$YT" == "Yes" ]; then
   greenMessage "Installing YT-Downloader now"!
-  if [ "$(cat /etc/cron.d/ytdl)" == "0 0 * * * $SINUSBOTUSER yt-dlp -U --restrict-filename >/dev/null" ]; then
-        rm /etc/cron.d/ytdl
-        yellowMessage "Deleted old YT-DL cronjob. Generating new one in a second."
+  if [ "$(cat /etc/cron.d/ytdlp)" == "0 0 * * * $SINUSBOTUSER yt-dlp -U --restrict-filename >/dev/null" ]; then
+        rm /etc/cron.d/ytdlp
+        yellowMessage "Deleted old YT-DLP cronjob. Generating new one in a second."
   fi
-  if [[ -f /etc/cron.d/ytdl ]] && [ "$(grep -c 'youtube' /etc/cron.d/ytdl)" -ge 1 ]; then
-    redMessage "Cronjob already set for YT-DL updater"!
+  if [[ -f /etc/cron.d/ytdlp ]] && [ "$(grep -c 'youtube' /etc/cron.d/ytdlp)" -ge 1 ]; then
+    redMessage "Cronjob already set for YT-DLP updater"!
   else
-    greenMessage "Installing Cronjob for automatic YT-DL update..."
-    echo "0 0 * * * $SINUSBOTUSER PATH=$PATH:/usr/local/bin; yt-dlp -U --restrict-filename >/dev/null" >>/etc/cron.d/ytdl
+    greenMessage "Installing Cronjob for automatic YT-DLP update..."
+    echo "0 0 * * * $SINUSBOTUSER PATH=$PATH:/usr/local/bin; yt-dlp -U --restrict-filename >/dev/null" >>/etc/cron.d/ytdlp
     greenMessage "Installing Cronjob successful."
   fi
 
@@ -901,7 +901,7 @@ if [ "$YT" == "Yes" ]; then
     rm /usr/local/bin/yt-dlp
   fi
 
-  greenMessage "Downloading YT-DL now..."
+  greenMessage "Downloading YT-DLP now..."
   wget -q -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
 
   if [ ! -f /usr/local/bin/yt-dlp ]; then
